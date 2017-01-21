@@ -3,14 +3,16 @@
 #TODO: announcements
 
 screensession=testserver
+serverlocation=/data/testservers/wetfjordTest/serverMinecraft/
+serverjar=spigot.jar
 option="${1}"
 #mem=${2:-1024}
 case ${option} in
 	-start)
 			screen -d -m -S "$screensession"
 			sleep 2
-			cd /data/testservers/wetfjordTest/serverMinecraft/
-			screen -R "$screensession" -X stuff 'java -Xms2048M -Xmx2048M -XX:MaxPermSize=128M -jar /data/testservers/wetfjordTest/serverMinecraft/spigot.jar nogui\n'
+			screen -R "$screensession" -X stuff "cd "$serverlocation"\n"
+			screen -R "$screensession" -X stuff "java -Xms2048M -Xmx2048M -XX:MaxPermSize=128M -jar "$serverlocation"spigot.jar nogui\n"
 		;;
 	-restart) #MEM="${2:-1024}"
 			screen -R "$screensession" -X stuff "say server will reboot in 30 seconds. Back in 1 minute $(printf '\r')"
@@ -31,8 +33,8 @@ case ${option} in
 			sleep 1
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
-			cd /data/testservers/wetfjordTest/serverMinecraft/
-			screen -R "$screensession" -X stuff 'java -Xms2048M -Xmx2048M -XX:MaxPermSize=128M -jar /data/testservers/wetfjordTest/serverMinecraft/spigot.jar nogui\n'
+			cd "$serverlocation"
+			screen -R "$screensession" -X stuff 'java -Xms2048M -Xmx2048M -XX:MaxPermSize=128M -jar "$serverlocation"spigot.jar nogui\n'
 		;;
 	-backup)
 			screen -R "$screensession" -X stuff "say Backup starting. You may experience a little lag$(printf '\r')"
@@ -46,21 +48,21 @@ case ${option} in
 			screen -R "$screensession" -X stuff "say Backup completed. $(printf '\r')"
 		;;
 	-stop)
-			screen -R "$screensession" -X stuff "say The server will shut down in 30 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 30 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 10
-			screen -R "$screensession" -X stuff "say The server will shut down in 20 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 20 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 10
-			screen -R "$screensession" -X stuff "say The server will shut down in 10 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 10 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 10
-			screen -R "$screensession" -X stuff "say The server will shut down in 5 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 5 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 5
-			screen -R "$screensession" -X stuff "say The server will shut down in 4 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 4 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 1
-			screen -R "$screensession" -X stuff "say The server will shut down in 3 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 3 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 1
-			screen -R "$screensession" -X stuff "say The server will shut down in 2 seconds. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 2 seconds. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 1
-			screen -R "$screensession" -X stuff "say The server will shut down in 1 second. For more information check facebook/twitter/our website $(printf '\r')"
+			screen -R "$screensession" -X stuff "say The server will shut down in 1 second. For more information check facebook/twitter/discord/our website $(printf '\r')"
 			sleep 1
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 10

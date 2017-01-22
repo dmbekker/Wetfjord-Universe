@@ -4,7 +4,10 @@
 
 screensession=testserver
 serverlocation=/data/testservers/wetfjordTest/serverMinecraft/
+backuplocation=/data/backups/minecraft/testserver/
 serverjar=spigot.jar
+days=5
+
 option="${1}"
 #mem=${2:-1024}
 case ${option} in
@@ -33,7 +36,6 @@ case ${option} in
 			sleep 1
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
-			cd "$serverlocation"
 			screen -R "$screensession" -X stuff 'java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n'
 		;;
 	-backup)
@@ -41,7 +43,7 @@ case ${option} in
 			screen -R "$screensession" -X stuff "save-off $(printf '\r')"
 			screen -R "$screensession" -X stuff "save-all $(printf '\r')"
 			sleep 3
-			tar -cpvzf /data/backups/minecraft/wetfjordSurvival/$(date +%y%m%d-%H%M%S).tar.gz /data/serverMinecraft
+			tar -cpvzf "$backuplocation"$(date +%y%m%d-%H%M%S).tar.gz "$serverlocation"
 			screen -R "$screensession" -X stuff "save-on $(printf '\r')"
 			screen -R "$screensession" -X stuff "save-all $(printf '\r')"
 			sleep 3
@@ -69,16 +71,16 @@ case ${option} in
 			screen -R "$screensession" -x stuff 'exit\n'
 			;;
 	-delete)
-			find /data/backups/minecraft/wetfjordSurvival* -mindepth 1 -mtime +2 -delete
+			find "$backuplocation"* -mindepth 1 -mtime +"$days" -delete
 			;;
 	-reload)
 			screen -R "$screensession" -X stuff "whitelist reload $(printf '\r')"
 			;;
 	-announcement1)
-			screen -R "$screensession" -X stuff "say à¸¢à¸‡2Announcement: Our new wiki will be the central hub of information @ wetfjord. Contribute! www.wetfjord.eu/wiki $(printf '\r')"
+			screen -R "$screensession" -X stuff "say §2Announcement: Our new wiki will be the central hub of information @ wetfjord. Contribute! www.wetfjord.eu/wiki $(printf '\r')"
 			;;
 	-announcement2)
-			screen -R "$screensession" -X stuff "say Â§2Announcement: Join our discord (skype group replacement)!: https://discord.gg/QH2WfWw  $(printf '\r')"
+			screen -R "$screensession" -X stuff "say §2Announcement: Join our discord (skype group replacement)!: https://discord.gg/QH2WfWw  $(printf '\r')"
 			;;
    *)
       echo "`basename ${0}`:usage: [-start memory in mb] | [-restart memory in mb] | [-backup] | [-stop] | [-reload] | [-announcement]"

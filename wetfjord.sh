@@ -8,13 +8,13 @@ serverjar=spigot.jar
 option="${1}"
 #mem=${2:-1024}
 case ${option} in
-	-start)
+	-start) MEM="${2:-1024}"
 			screen -d -m -S "$screensession"
 			sleep 2
 			screen -R "$screensession" -X stuff "cd "$serverlocation"\n"
-			screen -R "$screensession" -X stuff "java -Xms2048M -Xmx2048M -XX:MaxPermSize=128M -jar "$serverlocation"spigot.jar nogui\n"
+			screen -R "$screensession" -X stuff "java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
-	-restart) #MEM="${2:-1024}"
+	-restart) MEM="${2:-1024}"
 			screen -R "$screensession" -X stuff "say server will reboot in 30 seconds. Back in 1 minute $(printf '\r')"
 			sleep 10
 			screen -R "$screensession" -X stuff "say server will reboot in 20 seconds. Back in 1 minute $(printf '\r')"
@@ -34,7 +34,7 @@ case ${option} in
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
 			cd "$serverlocation"
-			screen -R "$screensession" -X stuff 'java -Xms2048M -Xmx2048M -XX:MaxPermSize=128M -jar "$serverlocation"spigot.jar nogui\n'
+			screen -R "$screensession" -X stuff 'java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n'
 		;;
 	-backup)
 			screen -R "$screensession" -X stuff "say Backup starting. You may experience a little lag$(printf '\r')"

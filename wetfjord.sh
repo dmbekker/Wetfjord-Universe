@@ -43,7 +43,10 @@ case ${option} in
 			screen -R "$screensession" -X stuff "save-off $(printf '\r')"
 			screen -R "$screensession" -X stuff "save-all $(printf '\r')"
 			sleep 3
-			tar -cpvzf "$backuplocation"$(date +%y%m%d-%H%M%S).tar.gz "$serverlocation"
+			rm -r /data/backups/latest/testserver/*
+			date=$(date +%y%m%d-%H%M%S)
+			tar -cpvzf "$backuplocation""$screensession-""$date".tar.gz "$serverlocation"
+			cp  "$backuplocation""$screensession-""$date".tar.gz /data/backups/latest/testserver/
 			screen -R "$screensession" -X stuff "save-on $(printf '\r')"
 			screen -R "$screensession" -X stuff "save-all $(printf '\r')"
 			sleep 3

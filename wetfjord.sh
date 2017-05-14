@@ -37,7 +37,7 @@ case ${option} in
 			sleep 1
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
-			mv "$buildtoolslocation""$serverjar" "$serverlocation""$serverjar"
+			cp "$buildtoolslocation""$serverjar" "$serverlocation""$serverjar"
 			screen -R "$screensession" -X stuff "java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
 	-backup)

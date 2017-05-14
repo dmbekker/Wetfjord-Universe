@@ -5,6 +5,7 @@
 screensession=testserver
 serverlocation=/data/testservers/wetfjordTest/serverMinecraft/
 backuplocation=/data/backups/minecraft/testserver/
+buildtoolslocation=/home/minecraft/buildtools/
 serverjar=spigot.jar
 days=5
 
@@ -36,7 +37,8 @@ case ${option} in
 			sleep 1
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
-			screen -R "$screensession" -X stuff 'java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n'
+			mv "$buildtoolslocation""$serverjar" "$serverlocation""$serverjar"
+			screen -R "$screensession" -X stuff "java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
 	-backup)
 			screen -R "$screensession" -X stuff "say Backup starting. You may experience a little lag$(printf '\r')"
@@ -78,6 +80,12 @@ case ${option} in
 			;;
 	-reload)
 			screen -R "$screensession" -X stuff "whitelist reload $(printf '\r')"
+			;;
+	-update) REVISION="${2}"
+			cd "$buildtoolslocation"
+			curl "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar" -o BuildTools.jar
+			java -jar BuildTools.jar --rev "$REVISION"
+			mv "$buildtoolslocation"spigot-"$REVISION".jar "$buildtoolslocation""$serverjar"
 			;;
 	-announcement1)
 			screen -R "$screensession" -X stuff "say §2Announcement: Our new wiki will be the central hub of information @ wetfjord. Contribute! www.wetfjord.eu/wiki $(printf '\r')"

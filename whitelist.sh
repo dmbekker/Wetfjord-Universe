@@ -5,9 +5,9 @@
 #Comment: This script automates the whitelisting and notifying of a minecraft player.
 playername="${1}"
 email="${2}"
-admins="yourEmailAdressHere"
-file=/fath/to/file/whitelist.json
-screensession=testserver
+admins="emailshere"
+file=/path/to/file/whitelist.json
+screensession=wetfjordsurvival
 
 
 UUID_URL=https://api.mojang.com/users/profiles/minecraft/$1
@@ -33,11 +33,8 @@ fi
 
 #add the player to the whitelist
 screen -R "$screensession" -X stuff "whitelist add $playername $(printf '\r')"
+screen -R "$screensession" -X stuff "whitelist reload $(printf '\r')"
 
-#check if the whitelisting was succesful
-if grep -w -q "$UUID" "$file"; then
-	echo -e "Hello! \n  You have been whitelisted at Wetfjord! Because of the automated systems we use it may take up to 10 minutes for the changes to apply. \n  The server-IP is: wetfjord.eu. \n  See you ingame! \n  /the admins of Wetfjord \n \n \n This is an automated email. If you reply to it your responses won't be read. \n Want to contact us? Use our discord server or the feedback form on our website. " |mail -s "welcome to Wetfjord!" $admins $2
-	echo "The following player has been whitelisted: $playername " | mail -s "$playername is now whitelisted" $admins
-else
-	echo "Error adding player "$1" to the whitelist, check after whitelisting failed" | mail -s "Whitelisting failed" $admins
-fi
+echo -e "Hello! \n  You have been whitelisted at Wetfjord! Because of the automated systems we use it may take up to 10 minutes for the changes to apply. \n  The server-IP is: wetfjord.eu. \n  See you ingame! \n  /the admins of Wetfjord \n \n \n This is an automated email. If you reply to it your responses won't be read. \n Want to contact us? Use our discord server or the feedback form on our website. " |mail -s "welcome to Wetfjord!" $admins $2
+echo "The following player has been whitelisted: $playername " | mail -s "$playername is now whitelisted" $admins
+

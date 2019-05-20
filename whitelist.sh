@@ -30,6 +30,9 @@ exit;
 fi
 
 #add the player to the whitelist
-screen -R "$screensession" -X stuff "whitelist add $playername $(printf '\r')"
-
-echo ""$1" is now whitelisted"
+if [[ $(screen -ls | grep "$screensession") > 1 ]]; then 
+	screen -R "$screensession" -X stuff "whitelist add $playername $(printf '\r')"
+	echo ""$1" is now whitelisted"
+else
+	echo "The screensession "$screensession" has not been found, player not whitelisted!"
+fi

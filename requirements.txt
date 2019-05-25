@@ -1,0 +1,9 @@
+# Name: requirements.txt
+# Version: 1.0
+# Language & Version: Python 3.6
+# Description: These are the requirements for the Wetfjord Universe (WFU) hansibot!
+# Changelist: 
+    # 25/05/2019: Added this block of text,
+
+# discord.py!
+discord.py==0.16.12

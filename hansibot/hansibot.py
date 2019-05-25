@@ -1,10 +1,19 @@
 # tmp
-# Work with Python 3.6
-from typing import List
+# Name: hansibot.py
+# Version: 1.0
+# Language & Version: Python 3.6
+# Description: Python Discord bot for the Wetfjord Universe (WFU) Discord Server!
+# Changelist: 
+	# 25/05/2019: Added this block of text, also: !slap
 
-import discord
-import subprocess
-from hansibotConfig import *
+# Works with Python 3.6
+
+# Importing needed packages:
+
+from typing import List # ?
+import discord # How else are we going to work with discord?
+import subprocess # ?
+from hansibotConfig import * # Import the config
 
 
 print(discord.__version__)
@@ -32,21 +41,31 @@ async def on_message(message):
             msg = 'Output terminal: {}'.format(whitelistingOutput, message)
             await client.send_message(message.channel, msg)
 
+# Everything here is for everyone to use!
+# TODO: turn these into functions maybe? lots of duplicate code
+
     if "hansi sucks" in message.content:
         msg = 'You said fucking wut m8?! Fight me bitch'.format(message)
         await client.send_message(message.channel, msg)
 
+# Commands (start with !)
+    # Heilarious
     if message.content.startswith('!HeilHansi'):
         msg = 'Danke schön {0.author.mention}!'.format(message)
         await client.send_message(message.channel, msg)
 
+    # Gotta love the old IRC commands!
+    if message.content.startswith('!slap'):
+		content = message.content.split()
+        msg = '{0.author.mention} slaps {content[1]} around a bit with a large trout!'.format(message)
+        await client.send_message(message.channel,msg)
 
+# What does this do?
 @client.event
 async def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
-
 
 client.run(TOKEN)

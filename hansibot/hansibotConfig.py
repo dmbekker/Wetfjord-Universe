@@ -3,8 +3,9 @@
 # Language & Version: Python 3.6
 # Description: Configfile for the hansibot!
 # Changelist: 
-	# 25/05/2019: Added this block of text, 
+	# 25-05-2019: Added this block of text, 
 	
-TOKEN = 'discordTokenHere'
+TOKEN = 'InsertTokenHere'
 whitelistScript = '/path/to/whitelist.sh'
 staff = ['groupid1Here', 'groupid2Here']
+DESCRIPTION = 'Python Discord bot for the Wetfjord Universe (WFU) Discord Server!'

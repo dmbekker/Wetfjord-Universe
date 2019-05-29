@@ -1,71 +1,73 @@
-# tmp
+#! /usr/bin/env python3
+
 # Name: hansibot.py
 # Version: 1.0
 # Language & Version: Python 3.6
 # Description: Python Discord bot for the Wetfjord Universe (WFU) Discord Server!
 # Changelist: 
-	# 25/05/2019: Added this block of text, also: !slap
-
-# Works with Python 3.6
+	# 25-05-2019: Added this block of text, also: !slap
+	# 26-05-2019: Initiated rewrite of hansibot from discord.Client() to commands.Bot()
+	# 28-05-2019: Started all over, fuck this shit, Python 3.7, proper formatting, discord.py >=1.0 here we go!
+	
+# Works with Python 3.7 & Discord.py <= 1.0!
 
 # Importing needed packages:
-
-from typing import List # ?
-import discord # How else are we going to work with discord?
-import subprocess # ?
-from hansibotConfig import * # Import the config
-
-
-print(discord.__version__)
-
-client = discord.Client()
+import discord # Discord.py
+from discord.ext import commands # Package for command interpretation
+from hansibotConfig import * # Config of the bot
+import random # for all the random stuff
 
 
-@client.event
-async def on_message(message):
-    # we do not want the bot to reply to itself
-    if message.author == client.user:
-        return
+# Initiate bot, with commandprefix '!'
+bot = commands.Bot(command_prefix='!', description=DESCRIPTION)
 
-    # Everything in this if-statement is for universe-admins and universe-mods only:
-    if staff[0] in [y.id for y in message.author.roles] or staff[1] in [y.id for y in message.author.roles]:
-        if message.content.startswith('!foradminsonly'):
-            msg = '{0.author.mention} is an admin'.format(message)
-            await client.send_message(message.channel, msg)
-
-        if message.content.startswith('!whitelist add'):
-            content = message.content.split()
-            msg = 'Whitelisting {}'.format(content[2], message)
-            await client.send_message(message.channel, msg)
-            whitelistingOutput = subprocess.check_output([whitelistScript, content[2]], stderr=subprocess.STDOUT).decode('utf-8')
-            msg = 'Output terminal: {}'.format(whitelistingOutput, message)
-            await client.send_message(message.channel, msg)
-
-# Everything here is for everyone to use!
-# TODO: turn these into functions maybe? lots of duplicate code
-
-    if "hansi sucks" in message.content:
-        msg = 'You said fucking wut m8?! Fight me bitch'.format(message)
-        await client.send_message(message.channel, msg)
-
-# Commands (start with !)
-    # Heilarious
-    if message.content.startswith('!HeilHansi'):
-        msg = 'Danke schön {0.author.mention}!'.format(message)
-        await client.send_message(message.channel, msg)
-
-    # Gotta love the old IRC commands!
-    if message.content.startswith('!slap'):
-		content = message.content.split()
-        msg = '{0.author.mention} slaps {content[1]} around a bit with a large trout!'.format(message)
-        await client.send_message(message.channel,msg)
-
-# What does this do?
-@client.event
+# When the bot is ready:
+@bot.event
 async def on_ready():
     print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
+    print(bot.user.name)
+    print(bot.user.id)
+    print('Everything ready to go! \n ------')
 
-client.run(TOKEN)
+# Message related stuff:
+#@bot.event
+async def on_message(message):
+
+# Police messages for anti-Hansi sentiment
+	if 'hansi sucks' in message.content:
+		ctx.send(f'{message.author.mention}, you bastard!')
+
+        
+# Commands:
+ 
+# Ping:
+@bot.command()
+async def ping(ctx):
+    await ctx.send(f'pong, {ctx.message.author.mention}')
+
+# The good old IRC slap command:
+@bot.command()
+async def slap(ctx, member: discord.Member):
+	# Write error here (something like ' you need to @mention someone before you can slap them'
+	await ctx.send(f'{ctx.message.author.mention} slaps {member.mention} around with a big trout!')
+
+# HeilHansi:
+@bot.command()
+async def HeilHansi(ctx):
+	await ctx.send(f'Danke schön, {ctx.message.author.mention}!')
+
+# Whitelist related:
+# fixpls vb
+
+# Add:
+@bot.command()
+async def whitelistAdd(ctx):
+	await ctx.send(f'Whitelisted: {ctx.message.content}')
+
+# Remove
+@bot.command()
+async def whitelistRemove(ctx):
+	await ctx.send(f'Removed :{ctx.message.content}')	
+
+	
+bot.run(TOKEN)

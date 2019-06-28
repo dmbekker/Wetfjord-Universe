@@ -5,7 +5,7 @@
 # Changelist: 
 	# 25-05-2019: Added this block of text, 
 	
-TOKEN = 'InsertTokenHere'
+TOKEN = 'INSERT TOKEN HERE'
 whitelistScript = '/path/to/whitelist.sh'
 staff = ['groupid1Here', 'groupid2Here']
 DESCRIPTION = 'Python Discord bot for the Wetfjord Universe (WFU) Discord Server!'

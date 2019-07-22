@@ -6,7 +6,6 @@ import discord
 import subprocess
 from hansibotConfig import *
 
-
 print(discord.__version__)
 
 client = discord.Client()
@@ -30,6 +29,11 @@ async def on_message(message):
             await client.send_message(message.channel, msg)
             whitelistingOutput = subprocess.check_output([whitelistScript, content[2]], stderr=subprocess.STDOUT).decode('utf-8')
             msg = 'Output terminal: {}'.format(whitelistingOutput, message)
+            await client.send_message(message.channel, msg)
+            
+        if message.content.startswith('!ip'):
+            ipOutput = subprocess.check_output([curl, ipsite], stderr=subprocess.STDOUT).decode('utf-8')
+            msg = 'Output terminal: {}'.format(ipOutput, message)
             await client.send_message(message.channel, msg)
 
     if "hansi sucks" in message.content:

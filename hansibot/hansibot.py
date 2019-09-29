@@ -40,7 +40,7 @@ async def on_message(message):
         msg = 'You said fucking wut m8?! Fight me bitch'.format(message)
         await client.send_message(message.channel, msg)
 
-    if message.content.startswith('!HeilHansi'):
+    if message.content.contains('!HeilHansi'):
         msg = 'Danke schön {0.author.mention}! https://wetfjord.eu/heilhansi.png '.format(message)
         await client.send_message(message.channel, msg)
 

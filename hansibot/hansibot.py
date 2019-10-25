@@ -45,7 +45,7 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
         
     if "!ComradeHansi" in message.content:
-        comrade_list = ['cyka blyat {}'.format(message.author.mention), 'Yes comrade?', 'Heil H... Stalin!', 'knock knock who\'s there? COMRADE HANSI!']
+        comrade_list = ['Yes comrade?', 'Heil H... Stalin!', 'knock knock who\'s there? COMRADE HANSI!', 'cyka blyat {}'.format(message.author.mention)]
         comrade_item = random.choice(comrade_list)
         msg = '{} https://wetfjord.eu/comradehansi.png '.format(comrade_item, message)
         await client.send_message(message.channel, msg)

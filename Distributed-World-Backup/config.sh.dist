@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Please change the following variables
+# When done, rename file to config.sh.
+# then run download.sh
+
+URL_WORLD="" # url of the encrypted world-zip
+URL_SUM="" # url of the checksum for above file
+DEST_DIR="" # Directory to store the backups
+KEEP_DAYS=7 # World downloads older than $KEEP_DAYS will be deleted.

@@ -36,15 +36,15 @@ async def on_message(message):
             msg = 'Output terminal: {}'.format(ipOutput, message)
             await client.send_message(message.channel, msg)
 
-    if "hansi sucks".lower() in message.content.lower():
+    if "hansi sucks" in message.content:
         msg = 'You said fucking wut m8?! Fight me bitch'.format(message)
         await client.send_message(message.channel, msg)
 
-    if "!HeilHansi".lower() in message.content.lower():
+    if "!HeilHansi" in message.content:
         msg = 'Danke schön {0.author.mention}! https://wetfjord.eu/heilhansi.png '.format(message)
         await client.send_message(message.channel, msg)
 
-    if "!ComradeHansi".lower() in message.content.lower():
+    if "!ComradeHansi" in message.content:
         comrade_list = ['Yes comrade?', 'Heil H... Stalin!', 'knock knock who\'s there? COMRADE HANSI!', 'cyka blyat {}'.format(message.author.mention)]
         comrade_item = random.choice(comrade_list)
         msg = '{} https://wetfjord.eu/comradehansi.png '.format(comrade_item, message)

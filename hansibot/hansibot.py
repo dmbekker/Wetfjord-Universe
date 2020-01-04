@@ -30,21 +30,21 @@ async def on_message(message):
             whitelistingOutput = subprocess.check_output([whitelistScript, content[2]], stderr=subprocess.STDOUT).decode('utf-8')
             msg = 'Output terminal: {}'.format(whitelistingOutput, message)
             await client.send_message(message.channel, msg)
-            
+
         if message.content.startswith('!ip'):
             ipOutput = subprocess.check_output([curl, ipsite], stderr=subprocess.STDOUT).decode('utf-8')
             msg = 'Output terminal: {}'.format(ipOutput, message)
             await client.send_message(message.channel, msg)
 
-    if "hansi sucks" in message.content:
+    if "hansi sucks".lower() in message.content.lower():
         msg = 'You said fucking wut m8?! Fight me bitch'.format(message)
         await client.send_message(message.channel, msg)
 
-    if "!HeilHansi" in message.content:
+    if "!HeilHansi".lower() in message.content.lower():
         msg = 'Danke schön {0.author.mention}! https://wetfjord.eu/heilhansi.png '.format(message)
         await client.send_message(message.channel, msg)
-        
-    if "!ComradeHansi" in message.content:
+
+    if "!ComradeHansi".lower() in message.content.lower():
         comrade_list = ['Yes comrade?', 'Heil H... Stalin!', 'knock knock who\'s there? COMRADE HANSI!', 'cyka blyat {}'.format(message.author.mention)]
         comrade_item = random.choice(comrade_list)
         msg = '{} https://wetfjord.eu/comradehansi.png '.format(comrade_item, message)

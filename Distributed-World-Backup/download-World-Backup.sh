@@ -2,7 +2,7 @@
 
 # Script to download Wetfjord's (encrypted) world backup and store it for $KEEP_DAYS (default 7)
 #
-# Script will download from $URL_WORLD, then check the file checksum.
+# Script will download from $URL_WORLD
 # If all is OK file will be renamed to prepend the current date to the file.
 # If script is run multiple times per day, the file will be overwritten when renamed.
 #
@@ -20,13 +20,26 @@ if [ $? -ne 0 ]; then
 fi
 
 TODAY=$(date +"%Y_%m_%d")
+YESTERDAY=$(TZ=GMT date -d 'yesterday' '+%a, %d %b %Y %T %Z') # Formats date compliant rfc7232, section 3.3
 
 
 ### ---- Checking if things exists.
 [  -d "$DEST_DIR" ] || { echo >&2 "ERROR: Directory $DEST_DIR does not exists. Please create this directory.  Aborting."; exit 1; }
 
 command -v wget >/dev/null 2>&1 || { echo >&2 "ERROR: Script requires wget but it's not installed.  Aborting."; exit 1; }
-command -v sha256sum >/dev/null 2>&1 || { echo >&2 "ERROR: Script requires sha256sum but it's not installed.  Aborting."; exit 1; }
+command -v curl >/dev/null 2>&1 || { echo >&2 "ERROR: Script requires curl but it's not installed.  Aborting."; exit 1; }
+
+### ---- CHECK IF FILE HAS CHANGED SINCE 24 hours ago
+echo "INFO: Checking remote Last Modified Date"
+
+curl -I -s --header 'If-Modified-Since: '$YESTERDAY $URL_WORLD | grep "304 Not Modified"
+$curlexit = $?
+if [ $1 -ne '--force']; then
+  if [ $curlexit -eq 0 ]; then
+      echo >&2 "ERROR: World download has not been modified in the last 24 hours. No need to download it again. Use --force switch to override downlaoding. Aborting"; exit 1
+  fi
+fi
+
 
 ### ---- DOWNLOAD FROM WETFJORD.EU ----
 echo "INFO: Trying to download file"
@@ -42,25 +55,6 @@ fi
 
 LOCAL_WORLD=$DEST_DIR$(basename "$URL_WORLD")
 LOCAL_SUM=$DEST_DIR$(basename "$URL_SUM")
-
-### ---- Check if file matches checksum ----
-echo "INFO: Files downloaded. Will now validate the SHA256 checksum"
-cd $DEST_DIR
-sha256sum -c $LOCAL_SUM
-if [ $? -ne 0 ]; then
-    echo >&2 "ERROR: SHA256 checksum does not match. Try running the script again, if that does not fix the issue the source files are probably corrupt. ";
-    echo "INFO: This script will now delete the files just downloaded"
-    rm -i $LOCAL_WORLD
-    rm -i $LOCAL_SUM
-
-    cd $OLDPWD
-    echo >&2 "ERROR: Aborting."
-    exit 1
-fi
-cd $OLDPWD
-
-# Cleanup checksum file, not needed anymore
-rm -f $LOCAL_SUM || { echo >&2 "WARNING: Failed to remove checksum file.";}
 
 
 ### ---- RENAMING FILE INTO PLACE ----

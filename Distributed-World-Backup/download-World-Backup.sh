@@ -29,14 +29,21 @@ YESTERDAY=$(TZ=GMT date -d 'yesterday' '+%a, %d %b %Y %T %Z') # Formats date com
 command -v wget >/dev/null 2>&1 || { echo >&2 "ERROR: Script requires wget but it's not installed.  Aborting."; exit 1; }
 command -v curl >/dev/null 2>&1 || { echo >&2 "ERROR: Script requires curl but it's not installed.  Aborting."; exit 1; }
 
-### ---- CHECK IF FILE HAS CHANGED SINCE 24 hours ago
+
+### ---- CHECK IF WORLD BACKUP WITH TODAYS DATE ALREADY EXISTS
+if [ -f "${DEST_DIR}WetfjordBCK_${TODAY}.zip" ]; then
+    echo >&2 "ERROR: World download for ${TODAY} already exists. Aborting"; exit 1
+fi
+
+
+### ---- CHECK IF FILE HAS CHANGED SINCE 24 HOURS AGO
 echo "INFO: Checking remote Last Modified Date"
 
 curl -I -s --header 'If-Modified-Since: '$YESTERDAY $URL_WORLD | grep "304 Not Modified"
-$curlexit = $?
-if [ $1 -ne '--force']; then
+curlexit=$?
+if [ "$1" = "--force" ]; then
   if [ $curlexit -eq 0 ]; then
-      echo >&2 "ERROR: World download has not been modified in the last 24 hours. No need to download it again. Use --force switch to override downlaoding. Aborting"; exit 1
+      echo >&2 "ERROR: World download has not been modified in the last 24 hours. No need to download it. Use --force switch to override downlaoding. Aborting"; exit 1
   fi
 fi
 
@@ -48,16 +55,10 @@ wget $URL_WORLD -P $DEST_DIR -nc
 if [ $? -ne 0 ]; then
     echo >&2 "ERROR: Wget failed to download $URL_WORLD. Aborting"; exit 1
 fi
-wget $URL_SUM -P $DEST_DIR -nc
-if [ $? -ne 0 ]; then
-    echo >&2 "ERROR: Wget failed to download $URL_SUM. Aborting"; exit 1
-fi
-
-LOCAL_WORLD=$DEST_DIR$(basename "$URL_WORLD")
-LOCAL_SUM=$DEST_DIR$(basename "$URL_SUM")
 
 
 ### ---- RENAMING FILE INTO PLACE ----
+LOCAL_WORLD=$DEST_DIR$(basename "$URL_WORLD")
 mv $LOCAL_WORLD "${DEST_DIR}WetfjordBCK_${TODAY}.zip" || { echo >&2 "WARNING: Failed to rename file. Will continue, but script will fail next run since file is still in place.";}
 
 echo "INFO: World backup saved to "${DEST_DIR}WetfjordBCK_${TODAY}.zip""

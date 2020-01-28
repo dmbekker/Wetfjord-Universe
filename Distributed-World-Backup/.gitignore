@@ -1,2 +1,4 @@
 *.zip
 config.sh
+*.gpg
+md5sum.txt

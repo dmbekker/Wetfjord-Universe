@@ -5,7 +5,6 @@ download-World-Backup.sh is a script to download the latest Wetfjord Encrypted b
 1. Open config.sh.dist
 2. Edit the variables
 	* `URL_WORLD`: The link to the ZIP-file to be downloaded
-	* `URL_SUM`: The link to the ZIP's checksum-file to be downloaded
 	* `DEST_DIR`: Directory on your local filesystem, where to store the downloaded files
 	* `KEEP_DAYS`: For how long to keep a downloaded ZIP-file. Will be deleted after.
 3. Rename config.sh.dist to config.sh

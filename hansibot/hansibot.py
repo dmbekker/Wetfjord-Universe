@@ -55,7 +55,7 @@ async def on_message(message):
         commander_list = ['Yes comrade?', 'Well no shit. What\'ve we\'ve got here? A fucking comedian, Private Joker.', 'knock knock who\'s there? COMMANDER HANSI!', 'I bet you\'re the kind of guy that would f-ck a person in the ass and not even have the goddamn common courtesy to give him a reach-around. I\'ll be watching you {}'.format(message.author.mention)]
         commander_item = random.choice(commander_list)
         msg = ' https://wetfjord.eu/commanderhansi.png {}'.format(commander_item, message)
-
+        await client.send_message(message.channel, msg)
 
 @client.event
 async def on_ready():

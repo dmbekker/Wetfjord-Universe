@@ -70,8 +70,8 @@ async def on_message(message):
             players = (a2s.players(address_hl2dm))
             player_count = len(players)
             players_and_score = ""
-            playtime_minutes = players.duration / 60
             for player in players:
+                playtime_minutes = player.duration / 60
                 players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
             msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
             await client.send_message(message.channel, msg)
@@ -80,8 +80,8 @@ async def on_message(message):
             players = (a2s.players(address_tf2))
             player_count = len(players)
             players_and_score = ""
-            playtime_minutes = players.duration / 60
             for player in players:
+                playtime_minutes = player.duration / 60
                 players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
             msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
             await client.send_message(message.channel, msg)

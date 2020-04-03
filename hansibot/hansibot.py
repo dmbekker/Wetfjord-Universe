@@ -5,7 +5,13 @@ from typing import List
 import discord
 import subprocess
 import random
+import a2s
 from hansibotConfig import *
+
+
+address_hl2dm = ("wetfjord.eu", 27020)
+address_tf2 = ("wetfjord.eu", 27015)
+address_arma3 = ("wetfjord.eu", 2303)
 
 print(discord.__version__)
 
@@ -56,6 +62,42 @@ async def on_message(message):
         commander_item = random.choice(commander_list)
         msg = ' https://wetfjord.eu/commanderhansi.png {}'.format(commander_item, message)
         await client.send_message(message.channel, msg)
+
+###### Specific channels: ######
+    ##hl2:dm & tf2##
+    if (message.channel.id == '237233849820512267'):
+        if message.content.startswith('!on_hl2'):
+            players = (a2s.players(address_hl2dm))
+            player_count = len(players)
+            players_and_score = ""
+            for player in players:
+                playtime_minutes = player.duration / 60
+                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
+            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
+            await client.send_message(message.channel, msg)
+
+        if message.content.startswith('!on_tf2'):
+            players = (a2s.players(address_tf2))
+            player_count = len(players)
+            players_and_score = ""
+            for player in players:
+                playtime_minutes = player.duration / 60
+                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
+            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
+            await client.send_message(message.channel, msg)
+
+    ##Arma3##
+    if (message.channel.id == '250269739220336642'):
+        if message.content.startswith('!on'):
+            players = (a2s.players(address_arma3))
+            game_info = (a2s.info(address_arma3))
+            player_count = len(players)
+            players_and_score = ""
+            for player in players:
+                playtime_minutes = player.duration / 60
+                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
+            msg = '``` Map: {} \n Game: {} \n \n Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format( game_info.map_name, game_info.game, player_count, players_and_score)
+            await client.send_message(message.channel, msg)
 
 @client.event
 async def on_ready():

@@ -74,6 +74,7 @@ async def on_message(message):
                 #print(player.name, "\t \t", player.score, "\t \t", player.duration, "\n")
                 players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(player.duration) + "\n"
             msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime \n {} ```'.format(player_count, players_and_score)
+            await client.send_message(message.channel, msg)
 
 
 @client.event

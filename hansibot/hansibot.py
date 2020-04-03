@@ -5,7 +5,13 @@ from typing import List
 import discord
 import subprocess
 import random
+import a2s
 from hansibotConfig import *
+
+
+address_hl2dm = ("wetfjord.eu", 27020)
+address_tf2 = ("wetfjord.eu", 27015)
+address_arma3 = ("wetfjord.eu", 2303)
 
 print(discord.__version__)
 
@@ -56,6 +62,19 @@ async def on_message(message):
         commander_item = random.choice(commander_list)
         msg = ' https://wetfjord.eu/commanderhansi.png {}'.format(commander_item, message)
         await client.send_message(message.channel, msg)
+
+###### Specific channels: ######
+    ##hl2:dm##
+    if (message.channel.id == '237233849820512267'):
+        if message.content.startswith('!on'):
+            players = (a2s.players(address_hl2dm))
+            player_count = len(players)
+            players_and_score = ""
+            for player in players:
+                #print(player.name, "\t \t", player.score, "\t \t", player.duration, "\n")
+                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(player.duration) + "\n"
+            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime \n {} ```'.format(player_count, players_and_score)
+
 
 @client.event
 async def on_ready():

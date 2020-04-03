@@ -64,17 +64,28 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
 
 ###### Specific channels: ######
-    ##hl2:dm##
+    ##hl2:dm & tf2##
     if (message.channel.id == '237233849820512267'):
-        if message.content.startswith('!on'):
+        if message.content.startswith('!on_hl2'):
             players = (a2s.players(address_hl2dm))
             player_count = len(players)
             players_and_score = ""
+            playtime_minutes = players.duration / 60
             for player in players:
-                #print(player.name, "\t \t", player.score, "\t \t", player.duration, "\n")
-                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(player.duration) + "\n"
-            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime \n {} ```'.format(player_count, players_and_score)
+                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
+            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
             await client.send_message(message.channel, msg)
+
+        if message.content.startswith('!on_tf2'):
+            players = (a2s.players(address_tf2))
+            player_count = len(players)
+            players_and_score = ""
+            playtime_minutes = players.duration / 60
+            for player in players:
+                players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
+            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
+            await client.send_message(message.channel, msg)
+
 
 
 @client.event

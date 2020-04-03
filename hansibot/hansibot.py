@@ -90,12 +90,13 @@ async def on_message(message):
     if (message.channel.id == '250269739220336642'):
         if message.content.startswith('!on'):
             players = (a2s.players(address_arma3))
+            game_info = (a2s.info(address_arma3))
             player_count = len(players)
             players_and_score = ""
             for player in players:
                 playtime_minutes = player.duration / 60
                 players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
-            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format(player_count, players_and_score)
+            msg = '``` Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} \n {} \n {} ```'.format(player_count, game_info.map_name, game_info.game, players_and_score)
             await client.send_message(message.channel, msg)
 
 @client.event

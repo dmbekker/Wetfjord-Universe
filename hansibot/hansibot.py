@@ -29,8 +29,7 @@ async def update_now_playing():
         #tf2
         players_tf2 = (a2s.players(address_tf2))
         player_count_tf2 = len(players)
-        await
-        client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
                                                          name="{} players in TF2!".format(player_count_tf2)))
         await asyncio.sleep(10)
 

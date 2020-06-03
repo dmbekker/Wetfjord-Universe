@@ -6,6 +6,7 @@ import discord
 import subprocess
 import random
 import a2s
+from discord.ext import commands
 from hansibotConfig import *
 
 

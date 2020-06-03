@@ -26,21 +26,21 @@ async def update_now_playing():
         players_hl2 = (a2s.players(address_hl2dm))
         player_count_hl2 = len(players_hl2)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
-                                                               name="{} players in HL2:DM!".format(player_count_hl2)))
+                                                               name="{} players in HL2:DM".format(player_count_hl2)))
         await asyncio.sleep(10)
 
         #tf2
         players_tf2 = (a2s.players(address_tf2))
         player_count_tf2 = len(players_tf2)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
-                                                               name="{} players in TF2!".format(player_count_tf2)))
+                                                               name="{} players in TF2".format(player_count_tf2)))
         await asyncio.sleep(10)
 
         #Arma3
         players_arma3 = (a2s.players(address_arma3))
         player_count_arma3 = len(players_arma3)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
-                                                               name="{} players in Arma3".format(player_count_arma3)))
+                                                               name="{} players in Arma 3".format(player_count_arma3)))
         await asyncio.sleep(10)
 
 

@@ -136,7 +136,9 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-
-client.loop.create_task(update_now_playing())
+try:
+    client.loop.create_task(update_now_playing())
+except KeyboardInterrupt:
+    print("Exiting")
 client.run(TOKEN)
 

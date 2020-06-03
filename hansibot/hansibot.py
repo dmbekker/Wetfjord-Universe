@@ -22,13 +22,13 @@ async def update_now_playing():
     while not client.is_closed:
         #hl2dm
         players_hl2 = (a2s.players(address_hl2dm))
-        player_count_hl2 = len(players)
+        player_count_hl2 = len(players_hl2)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{} players in HL2:DM!".format(player_count_hl2)))
         await asyncio.sleep(10)
 
         #tf2
         players_tf2 = (a2s.players(address_tf2))
-        player_count_tf2 = len(players)
+        player_count_tf2 = len(players_tf2)
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching,
                                                          name="{} players in TF2!".format(player_count_tf2)))
         await asyncio.sleep(10)

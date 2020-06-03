@@ -7,6 +7,7 @@ import subprocess
 import random
 import a2s
 from discord.ext import commands
+import asyncio
 from hansibotConfig import *
 
 

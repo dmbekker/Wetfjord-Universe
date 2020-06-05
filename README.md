@@ -9,7 +9,7 @@ Feel free to use them for your own servers, but please link to the source.
 
 Install the discord.py dependency by doing the following:
 
-python3 -m pip install --user discord.py==0.16.12
+python3 -m pip install --user discord.py==1.3.3
 
 
 ## Distributed World Backup

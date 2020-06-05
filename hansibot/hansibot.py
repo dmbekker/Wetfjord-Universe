@@ -21,7 +21,8 @@ client = discord.Client()
 
 async def update_now_playing():
     await client.wait_until_ready()
-    while True:
+    #while True:
+    while not client.is_closed:
         #hl2dm
         players_hl2 = (a2s.players(address_hl2dm))
         player_count_hl2 = len(players_hl2)
@@ -136,9 +137,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-try:
-    client.loop.create_task(update_now_playing())
-except KeyboardInterrupt:
-    print("Exiting")
+
+client.loop.create_task(update_now_playing())
 client.run(TOKEN)
 

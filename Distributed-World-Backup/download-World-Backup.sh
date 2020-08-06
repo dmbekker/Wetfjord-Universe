@@ -31,7 +31,7 @@ command -v curl >/dev/null 2>&1 || { echo >&2 "ERROR: Script requires curl but i
 
 
 ### ---- CHECK IF WORLD BACKUP WITH TODAYS DATE ALREADY EXISTS
-if [ -f "${DEST_DIR}WetfjordBCK_${TODAY}.zip" ]; then
+if [ -f "${DEST_DIR}WetfjordBCK_${TODAY}.tar.gz.gpg" ]; then
     echo >&2 "ERROR: World download for ${TODAY} already exists. Aborting"; exit 1
 fi
 
@@ -59,14 +59,14 @@ fi
 
 ### ---- RENAMING FILE INTO PLACE ----
 LOCAL_WORLD=$DEST_DIR$(basename "$URL_WORLD")
-mv $LOCAL_WORLD "${DEST_DIR}WetfjordBCK_${TODAY}.zip" || { echo >&2 "WARNING: Failed to rename file. Will continue, but script will fail next run since file is still in place.";}
+mv $LOCAL_WORLD "${DEST_DIR}WetfjordBCK_${TODAY}.tar.gz.gpg" || { echo >&2 "WARNING: Failed to rename file. Will continue, but script will fail next run since file is still in place.";}
 
-echo "INFO: World backup saved to "${DEST_DIR}WetfjordBCK_${TODAY}.zip""
+echo "INFO: World backup saved to "${DEST_DIR}WetfjordBCK_${TODAY}.tar.gz.gpg""
 
 ### ---- CLEAN OLD DOWNLOADS ----
 echo "INFO: Cleaning downloads older then $KEEP_DAYS days"
 echo "INFO: The following files will now be removed:"
-find $DEST_DIR -maxdepth 1 -name "*.zip"  -type f -mtime +$KEEP_DAYS  -print -delete
+find $DEST_DIR -maxdepth 1 -name "*.tar.gz.gpg"  -type f -mtime +$KEEP_DAYS  -print -delete
 
 
 echo "INFO: Script execution done"

@@ -4,6 +4,6 @@
 # When done, rename file to config.sh.
 # then run download-World-Backup.sh
 
-URL_WORLD="" # url of the encrypted world-zip
+URL_WORLD="" # url of the encrypted archives
 DEST_DIR="" # Directory to store the backups
 KEEP_DAYS=7 # World downloads older than $KEEP_DAYS will be deleted.

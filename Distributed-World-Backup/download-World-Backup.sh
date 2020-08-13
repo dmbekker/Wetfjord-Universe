@@ -10,11 +10,15 @@
 # Script created by David, use as you like.
 
 ### ---- SCRIPT INIT
-echo "INFO: Script execution started"
-echo "INFO: Loading config.sh"
-[ -f "config.sh" ] || { echo >&2 "ERROR: Config file not yet created. Please see instructions in config.sh.dist  Aborting."; exit 1; }
 
-source config.sh
+CONFIGFILE="$(dirname "$0")/config.sh"
+
+echo "INFO: Script execution started"
+echo "INFO: Loading config.sh: $CONFIGFILE"
+
+[ -f $CONFIGFILE ] || { echo >&2 "ERROR: Config file not yet created. Please see instructions in config.sh.dist  Aborting."; exit 1; }
+source $CONFIGFILE
+
 if [ $? -ne 0 ]; then
     echo >&2 "ERROR: Failed to load config. There is probably a syntax error. Aborting"; exit 1
 fi
